@@ -1,0 +1,9 @@
+-limit 16
+-speclimit 0
+-password itsabigtest
+-name "A Test NS2 Server"
+-config_path /server/configs
+-logdir /server/logs
+-modstorage /server/modstore
+-port 27015
+-startmodserver
