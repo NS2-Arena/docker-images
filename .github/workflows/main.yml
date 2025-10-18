@@ -1,0 +1,29 @@
+name: Main Push
+on:
+  push:
+    branches:
+      - main
+jobs:
+  publish-to-staging:
+    name: Publish (Staging)
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ${{ vars.BASE_REGION }}
+          role-to-assume: "arn:aws:iam::${{ secrets.STAGING_ACCOUNT_ID }}:role/ActionsRole"
+          mask-aws-account-id: true
+
+      - name: Build and push
+        run: |
+          aws ecr get-login-password --region $REGION | docker login --username AWS --password-stdin $ACCOUNT_ID.dkr.ecr.$REGION.amazonaws.com
+          docker build -t ns2arena/ns2-server .
+          docker tag ns2arena/ns2-server:latest $ACCOUNT_ID.dkr.ecr.eu-west-2.amazonaws.com/ns2arena/ns2-server:latest
+          docker push $ACCOUNT_ID.dkr.ecr.eu-west-2.amazonaws.com/ns2arena/ns2-server:latest
+        env:
+          REGION: ${{ vars.BASE_REGION }}
+          ACCOUNT_ID: ${{ secrets.STAGING_ACCOUNT_ID }}
