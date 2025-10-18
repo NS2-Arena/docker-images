@@ -20,6 +20,7 @@ jobs:
 
       - name: Build and push
         run: |
+          cd ns2server
           aws ecr get-login-password --region $REGION | docker login --username AWS --password-stdin $ACCOUNT_ID.dkr.ecr.$REGION.amazonaws.com
           docker build -t ns2arena/ns2-server .
           docker tag ns2arena/ns2-server:latest $ACCOUNT_ID.dkr.ecr.eu-west-2.amazonaws.com/ns2arena/ns2-server:latest
