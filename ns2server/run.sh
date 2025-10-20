@@ -15,10 +15,7 @@ LAUNCH_CONFIG="$4"
 echo "Fetching configs..."
 # Fetch config from s3 (mods, configs, etc.)
 BUCKET_NAME="$(aws ssm get-parameter --name "/NS2Arena/ConfigBucket/Name" | jq -r .Parameter.Value)"
-echo "BucketName=$BUCKET_NAME"
-echo "Running: aws s3 sync s3://$BUCKET_NAME/$LAUNCH_CONFIG /server"
 aws s3 sync s3://$BUCKET_NAME/$LAUNCH_CONFIG /server
-ls -lah /server
 PLAYER_LIMIT="$(cat /server/config.json | jq -r .PlayerLimit)"
 SPEC_LIMIT="$(cat /server/config.json | jq -r .SpecLimit)"
 
@@ -30,17 +27,16 @@ _term() {
 trap _term SIGTERM
 
 echo "Starting server"
-# /gamedata/x64/server_linux -file /server/config.txt &
 /gamedata/x64/server_linux \
-  -limit $PLAYER_LIMIT \
-  -speclimit $SPEC_LIMIT \
-  -password $PASSWORD \
-  -name $NAME \
+  -limit "$PLAYER_LIMIT" \
+  -speclimit "$SPEC_LIMIT" \
+  -password "$PASSWORD" \
+  -name "$NAME" \
   -config_path /server/configs \
   -logdir /server/logs \
   -modstorage /server/modstore \
   -port 27015 \
-  -map $MAP \
+  -map "$MAP" \
   -startmodserver
 child="$!"
 wait "$child"

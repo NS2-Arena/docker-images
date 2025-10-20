@@ -34,6 +34,7 @@ RUN ./steamcmd.sh \
 
 EXPOSE 27015/udp
 EXPOSE 27016/udp
+EXPOSE 27017
 
 ENV NAME="NS2 Dedicated Server"
 ENV MAP="ns2_veil"
