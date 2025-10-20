@@ -42,4 +42,6 @@ ENV MAP="ns2_veil"
 ENV PASSWORD=""
 ENV LAUNCH_CONFIG=""
 
-ENTRYPOINT ["/home/steam/run.sh", "${NAME}", "${MAP}", "${PASSWORD}", "${LAUNCH_CONFIG}"]
+# ENTRYPOINT ["/home/steam/run.sh", "${NAME}", "${MAP}", "${PASSWORD}", "${LAUNCH_CONFIG}"]
+SHELL ["/bin/bash", "-c"]
+ENTRYPOINT /home/steam/run.sh ${NAME} ${MAP} ${PASSWORD} ${LAUNCH_CONFIG}
