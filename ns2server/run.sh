@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+_error() {
+  echo "Aborting due to error"
+  exit 1
+}
+
+trap _error ERR
+
 NAME="$1"
 MAP="$2"
 PASSWORD="$3"

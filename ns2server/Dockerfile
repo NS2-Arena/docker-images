@@ -3,7 +3,7 @@ FROM --platform=amd64 cm2network/steamcmd:root
 
 RUN apt update
 RUN apt upgrade -y
-RUN apt install unzip
+RUN apt install -y unzip jq
 RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
 RUN unzip awscliv2.zip
 RUN ./aws/install
