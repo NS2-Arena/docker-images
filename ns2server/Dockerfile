@@ -5,7 +5,7 @@ RUN apt update
 RUN apt upgrade -y
 RUN apt install -y unzip jq
 RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-RUN unzip awscliv2.zip
+RUN unzip -q awscliv2.zip
 RUN ./aws/install
 
 # Setup directories
@@ -13,8 +13,8 @@ RUN mkdir /server
 RUN mkdir /gamedata
 
 # COPY config.txt /server/config.txt
-COPY run.sh /server/run.sh
-RUN chmod +x /server/run.sh
+COPY run.sh /home/steam/run.sh
+RUN chmod +x /home/steam/run.sh
 
 # Setup permissions
 RUN chown -R "steam:steam" /server
@@ -42,4 +42,4 @@ ENV MAP="ns2_veil"
 ENV PASSWORD=""
 ENV LAUNCH_CONFIG=""
 
-ENTRYPOINT ["/server/run.sh", "${NAME}", "${MAP}", "${PASSWORD}", "${LAUNCH_CONFIG}"]
+ENTRYPOINT ["/home/steam/run.sh", "${NAME}", "${MAP}", "${PASSWORD}", "${LAUNCH_CONFIG}"]
