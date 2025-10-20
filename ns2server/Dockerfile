@@ -1,11 +1,11 @@
-# check=skip=FromPlatformFlagConstDisallowed
+# check=skip=FromPlatformFlagConstDisallowed,SecretsUsedInArgOrEnv
 FROM --platform=amd64 cm2network/steamcmd:root
 
 # Setup directories
 RUN mkdir /server
 RUN mkdir /gamedata
 
-COPY config.txt /server/config.txt
+# COPY config.txt /server/config.txt
 COPY run.sh /server/run.sh
 RUN chmod +x /server/run.sh
 
@@ -27,5 +27,13 @@ RUN ./steamcmd.sh \
 
 EXPOSE 27015/udp
 EXPOSE 27016/udp
+
+ENV NAME="NS2 Dedicated Server"
+ENV MAP="ns2_veil"
+
+# Required vars to be set by the host
+ENV PASSWORD=""
+ENV S3_BASE=""
+ENV LAUNCH_CONFIG=""
 
 ENTRYPOINT ["/server/run.sh"]
