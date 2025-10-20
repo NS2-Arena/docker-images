@@ -1,6 +1,13 @@
 # check=skip=FromPlatformFlagConstDisallowed,SecretsUsedInArgOrEnv
 FROM --platform=amd64 cm2network/steamcmd:root
 
+RUN apt update
+RUN apt upgrade -y
+RUN apt install unzip
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+RUN unzip awscliv2.zip
+RUN ./aws/install
+
 # Setup directories
 RUN mkdir /server
 RUN mkdir /gamedata
