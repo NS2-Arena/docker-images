@@ -14,7 +14,7 @@ LAUNCH_CONFIG="$4"
 
 echo "Fetching configs..."
 # Fetch config from s3 (mods, configs, etc.)
-BUCKET_NAME="$(aws ssm get-parameter --name "/NS2Arena/ConfigBucket/Name")"
+BUCKET_NAME="$(aws ssm get-parameter --name "/NS2Arena/ConfigBucket/Name" | jq -r .Parameter.Value)"
 echo "BucketName=$BUCKET_NAME"
 aws s3 sync s3://$BUCKET_NAME/$LAUNCH_CONFIG /server
 PLAYER_LIMIT="$(cat /server/config.json | jq -r .PlayerLimit)"
