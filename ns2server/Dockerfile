@@ -33,7 +33,6 @@ ENV MAP="ns2_veil"
 
 # Required vars to be set by the host
 ENV PASSWORD=""
-ENV S3_BASE=""
 ENV LAUNCH_CONFIG=""
 
-ENTRYPOINT ["/server/run.sh"]
+ENTRYPOINT ["/server/run.sh", "${NAME}", "${MAP}", "${PASSWORD}", "${LAUNCH_CONFIG}"]
