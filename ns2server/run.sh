@@ -19,6 +19,9 @@ aws s3 sync s3://$BUCKET_NAME/$LAUNCH_CONFIG /server
 PLAYER_LIMIT="$(cat /server/config.json | jq -r .PlayerLimit)"
 SPEC_LIMIT="$(cat /server/config.json | jq -r .SpecLimit)"
 
+echo "Sending task success token"
+aws stepfunctions send-task-success --task-token "${TASK_TOKEN}" --task-output '{}'
+
 _term() {
   echo "Caught SIGTERM, killing server"
   kill -TERM "$child" 2>/dev/null

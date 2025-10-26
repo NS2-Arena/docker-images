@@ -42,6 +42,7 @@ ENV MAP="ns2_veil"
 # Required vars to be set by the host
 ENV PASSWORD=""
 ENV LAUNCH_CONFIG=""
+ENV TASK_TOKEN=""
 
 SHELL ["/bin/bash", "-c"]
 ENTRYPOINT /home/steam/run.sh "${NAME}" "${MAP}" "${PASSWORD}" "${LAUNCH_CONFIG}"
