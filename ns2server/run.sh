@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+_error() {
+  echo "Aborting due to error"
+  exit 1
+}
+
+trap _error ERR
+
 NAME="$1"
 MAP="$2"
 PASSWORD="$3"
@@ -15,8 +22,15 @@ SPEC_LIMIT="$(cat /server/config.json | jq -r .SpecLimit)"
 echo "Sending task success token"
 aws stepfunctions send-task-success --task-token "${TASK_TOKEN}" --task-output '{}'
 
+_term() {
+  echo "Caught SIGTERM, killing server"
+  kill -TERM "$child" 2>/dev/null
+}
+
+trap _term SIGTERM
+
 echo "Starting server"
-exec /gamedata/x64/server_linux \
+/gamedata/x64/server_linux \
   -limit "$PLAYER_LIMIT" \
   -speclimit "$SPEC_LIMIT" \
   -password "$PASSWORD" \
@@ -26,4 +40,9 @@ exec /gamedata/x64/server_linux \
   -modstorage /server/modstore \
   -port 27015 \
   -map "$MAP" \
-  -startmodserver
+  -startmodserver \
+  &
+child="$!"
+wait "$child"
+
+echo "Server terminated"
