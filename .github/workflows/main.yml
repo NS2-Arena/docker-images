@@ -23,7 +23,7 @@ jobs:
       - name: Build and push
         run: |
           cd ns2server
-          IMAGE_NAME=$(aws ssm get-parameter --name "/NS2Arena/ImageRepositories/ns2-server" | jq -r '.Parameter.Value')
+          IMAGE_NAME=$(aws ssm get-parameter --name "/NS2Arena/ImageRepositories/ns2-server/Name" | jq -r '.Parameter.Value')
           aws ecr get-login-password --region $REGION | docker login --username AWS --password-stdin $ACCOUNT_ID.dkr.ecr.$REGION.amazonaws.com
           docker build -t $IMAGE_NAME .
           docker tag $IMAGE_NAME:latest $ACCOUNT_ID.dkr.ecr.$REGION.amazonaws.com/$IMAGE_NAME:latest
