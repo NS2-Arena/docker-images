@@ -36,12 +36,12 @@ USER root
 RUN mkdir /server
 RUN mkdir /gamedata
 
-COPY --chown=ns2arena:ns2arena run.sh /home/ns2server/run.sh
-RUN chmod +x /home/ns2server/run.sh
+COPY --chown=ns2arena:ns2arena run.sh /home/ns2arena/run.sh
+RUN chmod +x /home/ns2arena/run.sh
 
 # Setup permissions
-RUN chown -R "ns2server:ns2server" /server
-RUN chown -R "ns2server:ns2server" /gamedata
+RUN chown -R "ns2arena:ns2arena" /server
+RUN chown -R "ns2arena:ns2arena" /gamedata
 
 COPY --chown=ns2arena:ns2arena --from=builder /gamedata /gamedata
 
