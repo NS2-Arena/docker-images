@@ -16,7 +16,7 @@ USER root
 
 RUN apt update && \
   apt upgrade -y && \
-  apt install -y --no-install-recommends unzip jq curl && \
+  apt install -y --no-install-recommends unzip jq curl ca-certificates && \
   rm -rf /var/cache/apt/archives /var/lib/apt/lists
 
 # TODO: These RUNs should probably not be cached to make sure we always have the latest version of awscli
