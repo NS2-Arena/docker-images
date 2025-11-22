@@ -60,4 +60,4 @@ ENV LAUNCH_CONFIG=""
 ENV TASK_TOKEN=""
 
 SHELL ["/bin/bash", "-c"]
-ENTRYPOINT /home/steam/run.sh "${NAME}" "${MAP}" "${PASSWORD}" "${LAUNCH_CONFIG}"
+ENTRYPOINT /home/ns2arena/run.sh "${NAME}" "${MAP}" "${PASSWORD}" "${LAUNCH_CONFIG}"
